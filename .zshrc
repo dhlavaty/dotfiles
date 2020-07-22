@@ -101,6 +101,7 @@ source $ZSH/oh-my-zsh.sh
 # DHlavaty own aliases
 alias p='cd ~/Developer'
 alias zshrc='code ~/.zshrc'
+alias rmnodemodules='find . -type d -name node_modules -prune | xargs rm -rf'
 
 # DHlavaty NVM (pretoze plugin 'nvm' nefunguje)
 export NVM_DIR="$HOME/.nvm"
