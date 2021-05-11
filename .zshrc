@@ -103,6 +103,20 @@ alias p='cd ~/Developer'
 alias zshrc='code ~/.zshrc'
 alias rmnodemodules='find . -type d -name node_modules -prune | xargs rm -rf'
 
+alias dockerbash="docker run --rm -i -t --entrypoint=/bin/bash"
+alias dockersh="docker run --rm -i -t --entrypoint=/bin/sh"
+alias httpshere='docker run --rm -it -p 80:80 -p 443:443 -v "${PWD}:/srv/data" dhlavaty/httpshere'
+alias webdavhere='docker run --rm -it -p 80:80 -v "${PWD}:/srv/data/share" dhlavaty/webdavhere'
+
+function dockerbashhere() {
+    dirname=${PWD##*/}
+    docker run --rm -it --entrypoint=/bin/bash -v `pwd`:/${dirname} -w /${dirname} "$@"
+}
+function dockershhere() {
+    dirname=${PWD##*/}
+    docker run --rm -it --entrypoint=/bin/sh -v `pwd`:/${dirname} -w /${dirname} "$@"
+}
+
 # DHlavaty NVM (pretoze plugin 'nvm' nefunguje)
 export NVM_DIR="$HOME/.nvm"
 [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
@@ -111,3 +125,8 @@ export NVM_DIR="$HOME/.nvm"
 # https://github.com/ohmyzsh/ohmyzsh/issues/2537
 # http://zsh.sourceforge.net/Doc/Release/Options.html
 unsetopt SHARE_HISTORY
+
+# DHlavaty kvoli homebrew
+export PATH="/usr/local/sbin:$PATH"
+# DHlavaty kvoli 'Using AWS CLI with Okta role' https://sli-do.atlassian.net/wiki/spaces/AWS/pages/248283140/Using+AWS+CLI+with+Okta+role
+export PATH="${PATH}:~/bin"
