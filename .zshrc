@@ -103,6 +103,7 @@ alias p='cd ~/Developer'
 alias zshrc='code ~/.zshrc'
 alias rmnodemodules='find . -type d -name node_modules -prune | xargs rm -rf'
 
+# DHlavaty docker aliases inspired by https://blog.ropnop.com/docker-for-pentesters/
 alias dockerbash="docker run --rm -i -t --entrypoint=/bin/bash"
 alias dockersh="docker run --rm -i -t --entrypoint=/bin/sh"
 alias httpshere='docker run --rm -it -p 80:80 -p 443:443 -v "${PWD}:/srv/data" dhlavaty/httpshere'
