@@ -102,6 +102,8 @@ source $ZSH/oh-my-zsh.sh
 alias p='cd ~/Developer'
 alias zshrc='code ~/.zshrc'
 alias rmnodemodules='find . -type d -name node_modules -prune | xargs rm -rf'
+alias targz='tar -cvzf'
+alias untargz='tar -xf'
 
 # DHlavaty docker aliases inspired by https://blog.ropnop.com/docker-for-pentesters/
 alias dockerbash="docker run --rm -i -t --entrypoint=/bin/bash"
