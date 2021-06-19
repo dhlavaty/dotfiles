@@ -111,7 +111,7 @@ alias dockersh="docker run --rm -i -t --entrypoint=/bin/sh"
 alias httpshere='docker run --rm -it -p 80:80 -p 443:443 -v "${PWD}:/srv/data" dhlavaty/httpshere'
 alias webdavhere='docker run --rm -it -p 80:80 -v "${PWD}:/srv/data/share" dhlavaty/webdavhere'
 
-alias heic2jpg='docker run --rm -it -v "${PWD}:/sourcedir" springloops/heic2jpg'
+alias heic2jpghere='docker run --rm -v "${PWD}:/workdir" dhlavaty/heic2jpg'
 
 function dockerbashhere() {
     dirname=${PWD##*/}
