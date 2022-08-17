@@ -105,6 +105,16 @@ alias rmnodemodules='find . -type d -name node_modules -prune | xargs rm -rf'
 alias targz='tar -cvzf'
 alias untargz='tar -xf'
 alias searchstringhere='grep -rnw . -e'
+# DHlavaty frequently used working shortcuts
+alias pr='yarn run pr'
+alias dev='yarn run dev'
+alias sb='yarn run storybook'
+alias sc='yarn run storybook:screenshots:docker ; Say "Done"'
+alias op='yarn run opendiff'
+# DHlavaty frequently used working shortcuts - Kubernetes
+alias kgp='kubectl get pods -l app=analytics'
+alias kl='kubectl logs'
+alias klf='kubectl logs -f'
 
 # DHlavaty docker aliases inspired by https://blog.ropnop.com/docker-for-pentesters/
 alias dockerbash="docker run --rm -i -t --entrypoint=/bin/bash"
