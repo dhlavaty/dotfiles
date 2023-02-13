@@ -104,15 +104,18 @@ alias zshrc='code ~/.zshrc'
 alias rmnodemodules='find . -type d -name node_modules -prune | xargs rm -rf'
 alias targz='tar -cvzf'
 alias untargz='tar -xf'
-alias searchstringhere='grep -rnw . -e'
+alias searchstringhere='grep -rnwi . -e'
+alias searchstringherepartial='grep -rni . -e'
 # DHlavaty frequently used working shortcuts
 alias pr='yarn run pr'
+alias prf='yarn run formatter ; yarn run pr'
 alias dev='yarn run dev'
 alias sb='yarn run storybook'
 alias sc='yarn run storybook:screenshots:docker ; Say "Done"'
 alias op='yarn run opendiff'
 # DHlavaty frequently used working shortcuts - Kubernetes
 alias kgp='kubectl get pods -l app=analytics'
+alias kgp2='kubectl get pods -l app=analytics2'
 alias kl='kubectl logs'
 alias klf='kubectl logs -f'
 
@@ -128,6 +131,10 @@ function dockerbashhere() {
     dirname=${PWD##*/}
     docker run --rm -it --entrypoint=/bin/bash -v `pwd`:/${dirname} -w /${dirname} "$@"
 }
+function dockerbashintelhere() {
+    dirname=${PWD##*/}
+    docker run --rm -it --platform=linux/amd64 --entrypoint=/bin/bash --publish 8080:8080 -v `pwd`:/${dirname} -w /${dirname} "$@"
+}
 function dockershhere() {
     dirname=${PWD##*/}
     docker run --rm -it --entrypoint=/bin/sh -v `pwd`:/${dirname} -w /${dirname} "$@"
@@ -135,7 +142,7 @@ function dockershhere() {
 
 # DHlavaty NVM (pretoze plugin 'nvm' nefunguje)
 export NVM_DIR="$HOME/.nvm"
-[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
 
 # DHlavaty - nechcem sharovanu historiu
 # https://github.com/ohmyzsh/ohmyzsh/issues/2537
@@ -144,5 +151,5 @@ unsetopt SHARE_HISTORY
 
 # DHlavaty kvoli homebrew
 export PATH="/usr/local/sbin:$PATH"
-# DHlavaty kvoli 'Using AWS CLI with Okta role' https://sli-do.atlassian.net/wiki/spaces/AWS/pages/248283140/Using+AWS+CLI+with+Okta+role
-export PATH="${PATH}:~/bin"
+# DHlavaty kvoli '~/Developer/infra-scripts/aws-cisco-login.py'
+export PATH="${PATH}:~/Developer/infra-scripts"
