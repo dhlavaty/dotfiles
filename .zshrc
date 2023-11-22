@@ -113,6 +113,16 @@ alias dev='yarn run dev'
 alias sb='yarn run storybook'
 alias sc='yarn run storybook:screenshots:docker ; Say "Done"'
 alias op='yarn run opendiff'
+
+function gitc() {
+    git checkout --detach origin/$@
+}
+
+alias nxdev='yarn run nx serve my-events'
+alias nxdevs='yarn run nx serve my-events --ssl'
+alias nxsetup='nvm use && yarn run nx setup my-events'
+alias nxf='yarn run nx format:write'
+alias nxpr='yarn run nx pr my-events && Say "NX good" || Say "NX error"'
 # DHlavaty frequently used working shortcuts - Kubernetes
 alias kgp='kubectl get pods -l app=analytics'
 alias kgp2='kubectl get pods -l app=analytics2'
