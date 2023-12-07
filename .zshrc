@@ -118,11 +118,13 @@ function gitc() {
     git checkout --detach origin/$@
 }
 
-alias nxdev='yarn run nx serve my-events'
-alias nxdevs='yarn run nx serve my-events --ssl'
+alias nxdev='nvm use && yarn run nx serve my-events'
+alias nxdevs='nvm use && yarn run nx serve my-events --ssl'
 alias nxsetup='nvm use && yarn run nx setup my-events'
 alias nxf='yarn run nx format:write'
 alias nxpr='yarn run nx pr my-events && Say "NX good" || Say "NX error"'
+alias apr='nvm use && yarn run nx format:write && yarn run nx typecheck admin && yarn run nx lint admin && Say "ADMIN good" || Say "ADMIN error"'
+alias adev='nvm use && yarn run admin:start'
 # DHlavaty frequently used working shortcuts - Kubernetes
 alias kgp='kubectl get pods -l app=analytics'
 alias kgp2='kubectl get pods -l app=analytics2'
