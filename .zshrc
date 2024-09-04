@@ -108,7 +108,7 @@ alias searchstringhere='grep -rnwi . -e'
 alias searchstringherepartial='grep -rni . -e'
 # DHlavaty frequently used working shortcuts
 alias pr='yarn run pr'
-alias prf='yarn run formatter ; yarn run pr'
+alias prf='yarn run formatter ; yarn run pr && Say "good" || Say "error"'
 alias dev='yarn run dev'
 alias sb='yarn run storybook'
 alias sc='yarn run storybook:screenshots:docker ; Say "Done"'
@@ -118,9 +118,12 @@ function gitc() {
     git checkout --detach origin/$@
 }
 
+alias cdf='f() { cd "$1" && echo "$1" && git fetch -v && cd ..};f'
+
 alias nxdev='nvm use && yarn run nx serve my-events'
 alias nxdevs='nvm use && yarn run nx serve my-events --ssl'
 alias nxsetup='nvm use && yarn run nx setup my-events'
+alias nxreset='nvm use && rmnodemodules && yarn install && yarn run reset ; Say "complete"'
 alias nxf='yarn run nx format:write'
 alias nxpr='yarn run nx pr my-events && Say "NX good" || Say "NX error"'
 alias apr='nvm use && yarn run nx format:write && yarn run nx typecheck admin && yarn run nx lint admin && Say "ADMIN good" || Say "ADMIN error"'
@@ -130,6 +133,8 @@ alias kgp='kubectl get pods -l app=analytics'
 alias kgp2='kubectl get pods -l app=analytics2'
 alias kl='kubectl logs'
 alias klf='kubectl logs -f'
+
+alias gitrebasemaster='git fetch origin master:master && git rebase master'
 
 # DHlavaty docker aliases inspired by https://blog.ropnop.com/docker-for-pentesters/
 alias dockerbash="docker run --rm -i -t --entrypoint=/bin/bash"
@@ -152,9 +157,9 @@ function dockershhere() {
     docker run --rm -it --entrypoint=/bin/sh -v `pwd`:/${dirname} -w /${dirname} "$@"
 }
 
-# DHlavaty NVM (pretoze plugin 'nvm' nefunguje)
-export NVM_DIR="$HOME/.nvm"
-[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+# FNM - Fast Node version manager
+eval "`fnm env`"
+alias nvm='fnm'
 
 # DHlavaty - nechcem sharovanu historiu
 # https://github.com/ohmyzsh/ohmyzsh/issues/2537
