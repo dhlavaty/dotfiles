@@ -168,5 +168,5 @@ unsetopt SHARE_HISTORY
 
 # DHlavaty kvoli homebrew
 export PATH="/usr/local/sbin:$PATH"
-# DHlavaty kvoli '~/Developer/infra-scripts/aws-cisco-login.py'
-export PATH="${PATH}:~/Developer/infra-scripts"
+# DHlavaty kvoli dockeru
+export PATH=$PATH:~/.docker/bin
