@@ -167,7 +167,9 @@ function dockershhere() {
 function smbservehere() {
     local sharename
     [[ -z $1 ]] && sharename="SHARE" || sharename=$1
-    docker run --rm -it -p 445:445 -v "${PWD}:/tmp/serve" rflathers/impacket smbserver.py -smb2support $sharename /tmp/serve
+    # docker run --rm -it -p 445:445 -v "${PWD}:/tmp/serve" rflathers/impacket smbserver.py -smb2support $sharename /tmp/serve
+    # For 'dhlavaty/mypacket' docker image see: https://gist.github.com/dhlavaty/82fc2bde306712b975455b645d0afb90
+    docker run --rm -it --entrypoint "/opt/venv/bin/python" -p 445:445 -v "${PWD}:/tmp/serve" dhlavaty/mypacket /opt/venv/bin/smbserver.py $sharename /tmp/serve
 }
 
 # FNM - Fast Node version manager
