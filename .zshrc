@@ -112,6 +112,7 @@ alias targz='tar -cvzf'
 alias untargz='tar -xf'
 alias searchstringhere='grep -rnwi . -e'
 alias searchstringherepartial='grep -rni . -e'
+alias mc='mc -u'
 # DHlavaty frequently used working shortcuts
 alias pr='yarn run pr'
 alias prf='yarn run formatter ; yarn run pr && Say "good" || Say "error"'
