@@ -143,12 +143,15 @@ alias klf='kubectl logs -f'
 
 alias gitrebasemaster='git fetch origin master:master && git rebase master'
 
+# If you really want to use single quotes '"'"' is interpreted as just '
+alias myip='ifconfig | grep '"'"'inet '"'"' | grep -Fv 127.0.0.1 | awk '"'"'{print $2}'"'"''
+
 # DHlavaty docker aliases inspired by https://blog.ropnop.com/docker-for-pentesters/
 alias dockerbash="docker run --rm -i -t --entrypoint=/bin/bash"
 alias dockersh="docker run --rm -i -t --entrypoint=/bin/sh"
 alias httpshere='docker run --rm -it -p 80:80 -p 443:443 -v "${PWD}:/srv/data" dhlavaty/httpshere'
 alias webdavhere='docker run --rm -it -p 80:80 -v "${PWD}:/srv/data/share" dhlavaty/webdavhere'
-alias copypartyhere='docker run --rm -it -u 1000 -p 3923:3923 -v "${PWD}:/w" copyparty/ac -v .::rw -z --qr'
+alias copypartyhere='docker run --rm -it -u $(id -u) -p 3923:3923 -v "${PWD}:/w" copyparty/ac -v .::rw'
 
 alias heic2jpghere='docker run --rm -v "${PWD}:/workdir" dhlavaty/heic2jpg'
 
