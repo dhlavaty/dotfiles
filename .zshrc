@@ -153,19 +153,21 @@ alias httpshere='docker run --rm -it -p 80:80 -p 443:443 -v "${PWD}:/srv/data" d
 alias webdavhere='docker run --rm -it -p 80:80 -v "${PWD}:/srv/data/share" dhlavaty/webdavhere'
 alias copypartyhere='docker run --rm -it -u $(id -u) -p 3923:3923 -v "${PWD}:/w" copyparty/ac -v .::rw'
 
-alias heic2jpghere='docker run --rm -v "${PWD}:/workdir" dhlavaty/heic2jpg'
+alias heic2jpghere='docker run --rm -v "${PWD}:/workdir" dhlavaty/heic2jpg --'
+
+alias aria2='aria2c --seed-time=0'
 
 function dockerbashhere() {
     dirname=${PWD##*/}
-    docker run --rm -it --entrypoint=/bin/bash -v `pwd`:/${dirname} -w /${dirname} "$@"
+    docker run --rm -it --entrypoint=/bin/bash -v "`pwd`:/${dirname}" -w /${dirname} "$@"
 }
 function dockerbashintelhere() {
     dirname=${PWD##*/}
-    docker run --rm -it --platform=linux/amd64 --entrypoint=/bin/bash --publish 8080:8080 -v `pwd`:/${dirname} -w /${dirname} "$@"
+    docker run --rm -it --platform=linux/amd64 --entrypoint=/bin/bash --publish 8080:8080 -v "`pwd`:/${dirname}" -w /${dirname} "$@"
 }
 function dockershhere() {
     dirname=${PWD##*/}
-    docker run --rm -it --entrypoint=/bin/sh -v `pwd`:/${dirname} -w /${dirname} "$@"
+    docker run --rm -it --entrypoint=/bin/sh -v "`pwd`:/${dirname}" -w /${dirname} "$@"
 }
 
 # to login use smb://192.168.100.xxx/share
