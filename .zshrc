@@ -179,6 +179,39 @@ function smbservehere() {
     docker run --rm -it --entrypoint "/opt/venv/bin/python" -p 445:445 -v "${PWD}:/tmp/serve" dhlavaty/mypacket /opt/venv/bin/smbserver.py $sharename /tmp/serve
 }
 
+mp4_to_av1_hd() {
+  if [[ $# -ne 1 ]]; then
+    echo "Convert to av1 (for fullhd video)"
+    echo "Usage: mp4_to_av1_hd <video-file>"
+    return 1
+  fi
+
+  local input="$1"
+  local output="${input%.*}-av1.mp4"
+
+  ffmpeg -i "$input" \
+    -c:v libsvtav1 -crf 40 \
+    -map_metadata 0 \
+    -c:a copy \
+    "$output"
+}
+mp4_to_av1_4k() {
+  if [[ $# -ne 1 ]]; then
+    echo "Convert to av1 (for 4k video)"
+    echo "Usage: mp4_to_av1_4k <video-file>"
+    return 1
+  fi
+
+  local input="$1"
+  local output="${input%.*}-av1.mp4"
+
+  ffmpeg -i "$input" \
+    -c:v libsvtav1 -crf 28 \
+    -map_metadata 0 \
+    -c:a copy \
+    "$output"
+}
+
 # FNM - Fast Node version manager
 # eval "`fnm env`"
 # alias nvm='fnm'
@@ -193,3 +226,5 @@ export PATH="/usr/local/sbin:$PATH"
 # DHlavaty kvoli dockeru
 export PATH=$PATH:~/.docker/bin
 
+# Set up fzf key bindings and fuzzy completion
+source <(fzf --zsh)
