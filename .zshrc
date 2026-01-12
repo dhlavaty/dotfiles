@@ -195,9 +195,10 @@ mp4_to_av1_hd() {
     -c:a copy \
     "$output"
 }
+
 mp4_to_av1_4k() {
   if [[ $# -ne 1 ]]; then
-    echo "Convert to av1 (for 4k video)"
+    echo "Convert to av1 + aac (for 4k video)"
     echo "Usage: mp4_to_av1_4k <video-file>"
     return 1
   fi
@@ -205,12 +206,70 @@ mp4_to_av1_4k() {
   local input="$1"
   local output="${input%.*}-av1.mp4"
 
+  # Get the codec of the first audio stream (if any)
+  local audio_codec=$(ffprobe -v error -select_streams a:0 -show_entries stream=codec_name -of default=nw=1:nk=1 "$input")
+
+  if [[ -z "$audio_codec" ]]; then
+    echo "No audio stream found in '$input'. Skipping."
+    return 0
+  fi
+
+  local ffmpeg_audio_param
+  if [[ "$audio_codec" == "aac" ]]; then
+    echo "Audio is already AAC. No conversion needed."
+    ffmpeg_audio_param=(-c:a copy)
+  else
+    echo "Audio is not AAC. Conversion is needed."
+    ffmpeg_audio_param=(-c:a aac -b:a 128k)
+  fi
+
+  set -x  # start tracing
+
   ffmpeg -i "$input" \
     -c:v libsvtav1 -crf 28 \
     -map_metadata 0 \
-    -c:a copy \
+    "${ffmpeg_audio_param[@]}" \
     "$output"
+
+  set +x  # stop tracing
 }
+
+add_gps_to_mp4() {
+  if [[ $# -ne 3 ]]; then
+    echo "Usage: add_gps_to_mp4 <video-file> <latitude> <longitude>"
+    echo "Example: add_gps_to_mp4 input.mp4 48.08999285168775 17.250989209290957"
+    return 1
+  fi
+
+  local lat lon input output iso6709
+  input="$1"
+  output="${input%.*}-gps.mp4"
+  lat="${2%,}"  # removes trailing comma
+  lon="${3%,}"  # removes trailing comma
+  lat=$(printf "%.4f" "$lat")
+  lon=$(printf "%.4f" "$lon")
+
+  # ISO 6709 format: +lat+lon/
+  iso6709=$(printf "%+.4f%+.4f/" "$lat" "$lon")
+
+
+  set -x  # start tracing
+
+  ffmpeg -i "$input" \
+    -c copy \
+    -map_metadata 0 \
+    -metadata location="$iso6709" \
+    -metadata com.apple.quicktime.location.ISO6709="$iso6709" \
+    "$output"
+
+  set +x
+
+    # -metadata creation_time="2011-12-24T19:00:00+01:00" \
+    # -metadata com.apple.quicktime.creationdate="2011-12-24T19:00:00+01:00" \
+  # ffmpeg dom NZ: "+47.9954+018.1593+120.0"
+  # ffmpeg zimny stadion NZ: "+47.9893+018.1820+120.0"
+}
+
 
 # FNM - Fast Node version manager
 # eval "`fnm env`"
